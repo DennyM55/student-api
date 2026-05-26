@@ -26,7 +26,12 @@ public class StudentService {
     public Optional<Student> getStudentById(Long id) {
         // repository.findById() comes from JpaRepository
         // It returns Optional<Student> - meaning "maybe a student, maybe nothing"
+
         return repository.findById(id);
+    }
+
+    public Optional<Student> getStudentByEmail(String email) {
+        return repository.findByEmail(email);
     }
 
     // Method to create a new student

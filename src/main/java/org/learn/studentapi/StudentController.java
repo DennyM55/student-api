@@ -37,6 +37,12 @@ public class StudentController {
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
     }
 
+    @GetMapping("/email/{email}")
+    public Student getStudentByEmail(@PathVariable String email) {
+        return service.getStudentByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Student not found with email: " + email));
+    }
+
     // @PostMapping handles POST requests (creating new data)
     // This endpoint will be: POST /api/students
     // @RequestBody means the data comes from the request body (JSON)

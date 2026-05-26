@@ -3,6 +3,8 @@ package org.learn.studentapi;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 // @Repository is another annotation
 // It tells Spring: "This is a special class that handles database operations"
 @Repository
@@ -18,4 +20,6 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     // - findAll() - get all records
     // - deleteById(id) - delete by ID
     // We don't need to write these - they're already there!
+
+    Optional<Student> findByEmail(String email);
 }
