@@ -47,6 +47,7 @@ public class StudentService {
             student.setName(newStudentData.getName());
             student.setEmail(newStudentData.getEmail());
             student.setAge(newStudentData.getAge());
+            student.setPhoneNumber(newStudentData.getPhoneNumber());
             return repository.save(student); // Save returns the updated student
         } else {
             // If not found, return null (or we could throw an error)

@@ -19,6 +19,7 @@ public class Student {
     private String name;
     private String email;
     private int age;
+    private String phoneNumber;
 
     // This is a CONSTRUCTOR - a special method to create Student objects
     // Don't worry too much about this yet
@@ -27,10 +28,11 @@ public class Student {
     }
 
     // This constructor lets us create a student with all fields at once
-    public Student(String name, String email, int age) {
+    public Student(String name, String email, int age, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.age = age;
+        this.phoneNumber = phoneNumber;
     }
 
     // GETTERS AND SETTERS
@@ -67,5 +69,13 @@ public class Student {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
