@@ -8,18 +8,33 @@ Developed a RESTful Student Management System API that demonstrates core backend
 
 ## Skills Demonstrated
 
-- Java 17 backend development
-- Spring Boot application development
-- REST API design with Spring MVC
-- CRUD operations using HTTP methods
-- Spring Data JPA repository pattern
-- Entity modeling with Jakarta Persistence API
-- MySQL database integration
-- Layered architecture with Controller, Service, Repository, and Entity classes
-- Maven-based project setup and dependency management
-- JSON request and response handling
-- Basic error handling for missing student records
-- API testing readiness with tools like Postman or curl
+- Java 17 backend application development
+- Spring Boot application setup and configuration
+- REST API design using Spring MVC controllers
+- CRUD endpoint implementation using `GET`, `POST`, `PUT`, and `DELETE`
+- Layered backend architecture using Controller, Service, Repository, and Entity classes
+- Dependency injection with Spring-managed components
+- JSON request and response handling for REST APIs
+- Request body validation with Jakarta Validation annotations
+- Centralized exception handling with custom error responses
+- Custom domain exceptions for missing resources
+- Spring Data JPA repository pattern with `JpaRepository`
+- Custom Spring Data JPA query methods such as `findByEmail` and `findByTitleContaining`
+- Entity modeling with Jakarta Persistence API annotations
+- Relational database design for students, teachers, courses, and enrollments
+- One-to-many relationship mapping between teachers and courses
+- Many-to-one relationship mapping between courses and teachers
+- Many-to-many relationship mapping between students and courses
+- Join table design and persistence using `student_courses`
+- Bidirectional relationship management between JPA entities
+- MySQL database integration with Hibernate ORM
+- Database schema generation and updates using Hibernate `ddl-auto`
+- Maven project structure, dependency management, and build lifecycle
+- Integration testing with Spring Boot test support and MockMvc
+- End-to-end API flow testing for create, search, assign, and enroll operations
+- Direct database verification of persisted relationship data with `JdbcTemplate`
+- Local API testing readiness with curl or Postman
+- Git-based workflow with commits and pushes to GitHub
 
 ## Tech Stack
 
