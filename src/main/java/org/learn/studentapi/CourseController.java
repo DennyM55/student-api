@@ -19,6 +19,11 @@ public class CourseController {
         return service.getAllCourses();
     }
 
+    @GetMapping("/search")
+    public List<Course> searchCoursesByTitle(@RequestParam String keyword) {
+        return service.searchCoursesByTitle(keyword);
+    }
+
     @GetMapping("/{id}")
     public Course getCourse(@PathVariable Long id) {
         return service.getCourseById(id)

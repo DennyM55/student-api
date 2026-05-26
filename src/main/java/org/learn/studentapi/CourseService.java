@@ -24,6 +24,10 @@ public class CourseService {
         return courseRepository.findById(id);
     }
 
+    public List<Course> searchCoursesByTitle(String keyword) {
+        return courseRepository.findByTitleContaining(keyword);
+    }
+
     public Course createCourse(Course course, Long teacherId) {
         Optional<Teacher> teacher = teacherRepository.findById(teacherId);
         if (teacher.isPresent()) {

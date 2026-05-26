@@ -39,12 +39,14 @@ Developed a RESTful Student Management System API that demonstrates core backend
 - Implemented a layered backend structure to separate API, business logic, and database access.
 - Used `JpaRepository` to reduce boilerplate database code.
 - Added a custom finder method, `findByEmail`, using Spring Data JPA naming conventions.
+- Added a custom course search method, `findByTitleContaining`, for keyword-based title lookup.
 - Modeled student, teacher, and course data with JPA relationships.
 - Added a one-to-many relationship from teacher to courses.
 - Added a many-to-one relationship from course to teacher.
 - Added a many-to-many relationship between students and courses.
 - Added an enrollment endpoint that stores student-course relationships in the `student_courses` join table.
 - Added an integration test that creates a student, creates a course, enrolls the student, and verifies the join table row.
+- Added integration tests for custom repository query endpoints.
 - Configured the application as a Spring Boot service that can be run locally with Maven.
 
 ## API Endpoints
@@ -64,6 +66,7 @@ Developed a RESTful Student Management System API that demonstrates core backend
 | `DELETE` | `/api/teachers/{id}` | Delete a teacher |
 | `GET` | `/api/courses` | Get all courses |
 | `GET` | `/api/courses/{id}` | Get a course by ID |
+| `GET` | `/api/courses/search?keyword={keyword}` | Search courses by title keyword |
 | `POST` | `/api/courses?teacherId={teacherId}` | Create a course for a teacher |
 | `PUT` | `/api/courses/{id}` | Update an existing course |
 | `PUT` | `/api/courses/{courseId}/teacher/{teacherId}` | Assign a teacher to a course |
@@ -115,6 +118,27 @@ curl -X POST http://localhost:8080/api/courses/1/enroll/1
 
 The enrollment is persisted in the `student_courses` join table using `course_id` and `student_id`.
 
+## Custom Query Examples
+
+Find a student by email:
+
+```bash
+curl http://localhost:8080/api/students/email/rahul@example.com
+```
+
+Search courses by title keyword:
+
+```bash
+curl "http://localhost:8080/api/courses/search?keyword=Spring"
+```
+
+These endpoints use Spring Data JPA repository query methods:
+
+```java
+Optional<Student> findByEmail(String email);
+List<Course> findByTitleContaining(String title);
+```
+
 ## Project Structure
 
 ```text
@@ -138,6 +162,7 @@ src/main/java/org/learn/studentapi
 src/test/java/org/learn/studentapi
 +-- StudentApiApplicationTests.java
 +-- CourseEnrollmentIntegrationTests.java
++-- RepositoryQueryEndpointIntegrationTests.java
 ```
 
 ## How to Run
@@ -192,6 +217,7 @@ On Windows:
 - How REST controllers map HTTP requests to Java methods.
 - How service classes organize business logic.
 - How repositories interact with a database using Spring Data JPA.
+- How to create custom Spring Data JPA query methods from method names.
 - How JPA entities map Java objects to database tables.
 - How to model and verify many-to-many relationships using a join table.
 - How to write an integration test for an end-to-end REST API flow.
@@ -206,6 +232,7 @@ On Windows:
 - Modeled one-to-many, many-to-one, and many-to-many relationships between teachers, courses, and students.
 - Implemented course enrollment using a REST endpoint and a `student_courses` join table.
 - Implemented custom student lookup by email using Spring Data JPA repository conventions.
+- Implemented course search by title keyword using a custom Spring Data JPA repository method.
 - Exposed JSON-based REST endpoints for create, read, update, delete, and search operations.
 
 ## Future Improvements
