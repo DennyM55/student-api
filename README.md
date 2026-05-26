@@ -1,10 +1,10 @@
 # Student Management System API
 
-Backend project built with Java, Spring Boot, Spring MVC, Spring Data JPA, and H2 Database.
+Backend project built with Java, Spring Boot, Spring MVC, Spring Data JPA, and MySQL.
 
 ## Professional Summary
 
-Developed a RESTful Student Management System API that demonstrates core backend development skills including layered architecture, CRUD API design, database persistence, dependency injection, and Spring Boot application setup. The project exposes endpoints to create, read, update, delete, and search student records by email.
+Developed a RESTful Student Management System API that demonstrates core backend development skills including layered architecture, CRUD API design, database persistence, dependency injection, and Spring Boot application setup. The project exposes endpoints to manage students, teachers, courses, teacher-course assignment, and student-course enrollment.
 
 ## Skills Demonstrated
 
@@ -14,7 +14,7 @@ Developed a RESTful Student Management System API that demonstrates core backend
 - CRUD operations using HTTP methods
 - Spring Data JPA repository pattern
 - Entity modeling with Jakarta Persistence API
-- In-memory database integration using H2
+- MySQL database integration
 - Layered architecture with Controller, Service, Repository, and Entity classes
 - Maven-based project setup and dependency management
 - JSON request and response handling
@@ -29,17 +29,20 @@ Developed a RESTful Student Management System API that demonstrates core backend
 | Framework | Spring Boot |
 | Web Layer | Spring MVC |
 | Persistence | Spring Data JPA |
-| Database | H2 Database |
+| Database | MySQL |
 | Build Tool | Maven |
 | API Format | REST / JSON |
 
 ## Project Highlights
 
-- Built a clean REST API for managing student records.
+- Built a clean REST API for managing student, teacher, and course records.
 - Implemented a layered backend structure to separate API, business logic, and database access.
 - Used `JpaRepository` to reduce boilerplate database code.
 - Added a custom finder method, `findByEmail`, using Spring Data JPA naming conventions.
-- Modeled student data with a JPA entity containing `id`, `name`, `email`, `age`, and `phoneNumber`.
+- Modeled student, teacher, and course data with JPA relationships.
+- Added a one-to-many relationship from teacher to courses.
+- Added a many-to-one relationship from course to teacher.
+- Added a many-to-many relationship between students and courses.
 - Configured the application as a Spring Boot service that can be run locally with Maven.
 
 ## API Endpoints
@@ -52,6 +55,18 @@ Developed a RESTful Student Management System API that demonstrates core backend
 | `POST` | `/api/students` | Create a new student |
 | `PUT` | `/api/students/{id}` | Update an existing student |
 | `DELETE` | `/api/students/{id}` | Delete a student |
+| `GET` | `/api/teachers` | Get all teachers |
+| `GET` | `/api/teachers/{id}` | Get a teacher by ID |
+| `POST` | `/api/teachers` | Create a new teacher |
+| `PUT` | `/api/teachers/{id}` | Update an existing teacher |
+| `DELETE` | `/api/teachers/{id}` | Delete a teacher |
+| `GET` | `/api/courses` | Get all courses |
+| `GET` | `/api/courses/{id}` | Get a course by ID |
+| `POST` | `/api/courses?teacherId={teacherId}` | Create a course for a teacher |
+| `PUT` | `/api/courses/{id}` | Update an existing course |
+| `PUT` | `/api/courses/{courseId}/teacher/{teacherId}` | Assign a teacher to a course |
+| `POST` | `/api/courses/{courseId}/enroll/{studentId}` | Enroll a student in a course |
+| `DELETE` | `/api/courses/{id}` | Delete a course |
 
 ## Sample Request
 
@@ -73,6 +88,17 @@ src/main/java/org/learn/studentapi
 +-- StudentController.java
 +-- StudentService.java
 +-- StudentRepository.java
++-- Teacher.java
++-- TeacherController.java
++-- TeacherService.java
++-- TeacherRepository.java
++-- Course.java
++-- CourseController.java
++-- CourseService.java
++-- CourseRepository.java
++-- exception/
+    +-- GlobalExceptionHandler.java
+    +-- ResourceNotFoundException.java
 ```
 
 ## How to Run
@@ -81,6 +107,15 @@ Prerequisites:
 
 - Java 17
 - Maven or the included Maven wrapper
+- MySQL running locally
+
+Default database settings:
+
+```properties
+MYSQL_URL=jdbc:mysql://localhost:3306/student_management?createDatabaseIfNotExist=true
+MYSQL_USERNAME=root
+MYSQL_PASSWORD=password
+```
 
 Run the application:
 
@@ -114,14 +149,11 @@ http://localhost:8080/api/students
 
 - Built a Java 17 and Spring Boot REST API for student management with full CRUD functionality.
 - Designed layered architecture using Controller, Service, Repository, and Entity classes.
-- Integrated Spring Data JPA with H2 Database for persistence and rapid local development.
+- Integrated Spring Data JPA with MySQL for relational persistence.
 - Implemented custom student lookup by email using Spring Data JPA repository conventions.
 - Exposed JSON-based REST endpoints for create, read, update, delete, and search operations.
 
 ## Future Improvements
 
-- Add validation for student fields such as email, age, and phone number.
-- Add global exception handling with proper HTTP status codes.
 - Add unit and integration tests for controller and service layers.
 - Add Swagger/OpenAPI documentation.
-- Replace H2 with MySQL or PostgreSQL for production-style persistence.

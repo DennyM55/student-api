@@ -1,5 +1,6 @@
 package org.learn.studentapi;
 
+import org.learn.studentapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,10 +55,9 @@ public class StudentService {
             student.setAge(newStudentData.getAge());
             student.setPhoneNumber(newStudentData.getPhoneNumber());
             return repository.save(student); // Save returns the updated student
-        } else {
-            // If not found, return null (or we could throw an error)
-            return null;
         }
+
+        throw new ResourceNotFoundException("Student not found with id: " + id);
     }
 
     // Method to delete a student

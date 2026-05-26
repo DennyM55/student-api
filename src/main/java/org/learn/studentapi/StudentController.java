@@ -1,5 +1,7 @@
 package org.learn.studentapi;
 
+import jakarta.validation.Valid;
+import org.learn.studentapi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,27 +36,27 @@ public class StudentController {
         // Call the service to find the student
         return service.getStudentById(id)
                 // .orElseThrow() handles the case where student is not found
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with id: " + id));
     }
 
     @GetMapping("/email/{email}")
     public Student getStudentByEmail(@PathVariable String email) {
         return service.getStudentByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Student not found with email: " + email));
+                .orElseThrow(() -> new ResourceNotFoundException("Student not found with email: " + email));
     }
 
     // @PostMapping handles POST requests (creating new data)
     // This endpoint will be: POST /api/students
     // @RequestBody means the data comes from the request body (JSON)
     @PostMapping
-    public Student createStudent(@RequestBody Student student) {
+    public Student createStudent(@Valid @RequestBody Student student) {
         return service.createStudent(student);
     }
 
     // @PutMapping handles PUT requests (updating existing data)
     // This endpoint will be: PUT /api/students/1
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable Long id, @RequestBody Student student) {
+    public Student updateStudent(@PathVariable Long id, @Valid @RequestBody Student student) {
         return service.updateStudent(id, student);
     }
 
