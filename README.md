@@ -43,6 +43,8 @@ Developed a RESTful Student Management System API that demonstrates core backend
 - Added a one-to-many relationship from teacher to courses.
 - Added a many-to-one relationship from course to teacher.
 - Added a many-to-many relationship between students and courses.
+- Added an enrollment endpoint that stores student-course relationships in the `student_courses` join table.
+- Added an integration test that creates a student, creates a course, enrolls the student, and verifies the join table row.
 - Configured the application as a Spring Boot service that can be run locally with Maven.
 
 ## API Endpoints
@@ -68,7 +70,7 @@ Developed a RESTful Student Management System API that demonstrates core backend
 | `POST` | `/api/courses/{courseId}/enroll/{studentId}` | Enroll a student in a course |
 | `DELETE` | `/api/courses/{id}` | Delete a course |
 
-## Sample Request
+## Sample Student Request
 
 ```json
 {
@@ -78,6 +80,40 @@ Developed a RESTful Student Management System API that demonstrates core backend
   "phoneNumber": "9998887776"
 }
 ```
+
+## Enrollment Flow Example
+
+Create a teacher:
+
+```bash
+curl -X POST http://localhost:8080/api/teachers \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Anita Sharma","subject":"Computer Science"}'
+```
+
+Create a student:
+
+```bash
+curl -X POST http://localhost:8080/api/students \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Rahul","email":"rahul@example.com","age":22,"phoneNumber":"9998887776"}'
+```
+
+Create a course for the teacher:
+
+```bash
+curl -X POST "http://localhost:8080/api/courses?teacherId=1" \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Spring Boot Basics","description":"Introductory Spring Boot course","durationWeeks":8}'
+```
+
+Enroll the student in the course:
+
+```bash
+curl -X POST http://localhost:8080/api/courses/1/enroll/1
+```
+
+The enrollment is persisted in the `student_courses` join table using `course_id` and `student_id`.
 
 ## Project Structure
 
@@ -99,6 +135,9 @@ src/main/java/org/learn/studentapi
 +-- exception/
     +-- GlobalExceptionHandler.java
     +-- ResourceNotFoundException.java
+src/test/java/org/learn/studentapi
++-- StudentApiApplicationTests.java
++-- CourseEnrollmentIntegrationTests.java
 ```
 
 ## How to Run
@@ -135,6 +174,18 @@ The API runs locally at:
 http://localhost:8080/api/students
 ```
 
+Run tests:
+
+```bash
+./mvnw test
+```
+
+On Windows:
+
+```powershell
+.\mvnw.cmd test
+```
+
 ## What I Learned
 
 - How to build a Spring Boot backend application from scratch.
@@ -142,6 +193,8 @@ http://localhost:8080/api/students
 - How service classes organize business logic.
 - How repositories interact with a database using Spring Data JPA.
 - How JPA entities map Java objects to database tables.
+- How to model and verify many-to-many relationships using a join table.
+- How to write an integration test for an end-to-end REST API flow.
 - How to use Maven dependencies for backend development.
 - How to structure a backend project for readability and maintainability.
 
@@ -150,10 +203,12 @@ http://localhost:8080/api/students
 - Built a Java 17 and Spring Boot REST API for student management with full CRUD functionality.
 - Designed layered architecture using Controller, Service, Repository, and Entity classes.
 - Integrated Spring Data JPA with MySQL for relational persistence.
+- Modeled one-to-many, many-to-one, and many-to-many relationships between teachers, courses, and students.
+- Implemented course enrollment using a REST endpoint and a `student_courses` join table.
 - Implemented custom student lookup by email using Spring Data JPA repository conventions.
 - Exposed JSON-based REST endpoints for create, read, update, delete, and search operations.
 
 ## Future Improvements
 
-- Add unit and integration tests for controller and service layers.
+- Add more unit and integration tests for controller and service edge cases.
 - Add Swagger/OpenAPI documentation.
