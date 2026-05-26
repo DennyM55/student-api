@@ -2,6 +2,7 @@ package org.learn.studentapi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -38,6 +39,7 @@ public class Course {
             joinColumns = @JoinColumn(name = "course_id"),  // This table's foreign key
             inverseJoinColumns = @JoinColumn(name = "student_id")  // Other table's foreign key
     )
+    @Valid
     @JsonIgnoreProperties("courses")
     private List<Student> students = new ArrayList<>();
 

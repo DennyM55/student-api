@@ -2,6 +2,7 @@ package org.learn.studentapi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -30,6 +31,7 @@ public class Teacher {
     // @OneToMany means: "This entity has many of the other entity"
     // mappedBy = "teacher" means: "The 'teacher' field in Course owns this relationship"
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Valid
     @JsonIgnoreProperties("teacher")
     private List<Course> courses = new ArrayList<>();
 
